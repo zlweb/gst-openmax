@@ -1,5 +1,7 @@
 /*
- * Copyright (C) 2007 Nokia Corporation. All rights reserved.
+ * Copyright (C) 2007-2008 Nokia Corporation. All rights reserved.
+ *
+ * Author: Felipe Contreras <felipe.contreras@nokia.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,8 +19,8 @@
  *
  */
 
-#ifndef __GST_OMX_H263DEC_H__
-#define __GST_OMX_H263DEC_H__
+#ifndef GSTOMX_BASE_VIDEODEC_H
+#define GSTOMX_BASE_VIDEODEC_H
 
 #include <gst/gst.h>
 
@@ -26,26 +28,28 @@
 
 G_BEGIN_DECLS
 
-#define GST_OMX_H263DEC(obj) (GstOmxH263Dec *) (obj)
-#define GST_OMX_H263DEC_TYPE (gst_omx_h263dec_get_type ())
+#define GST_OMX_BASE_VIDEODEC(obj) (GstOmxBaseVideoDec *) (obj)
+#define GST_OMX_BASE_VIDEODEC_TYPE (gst_omx_base_videodec_get_type ())
 
-typedef struct GstOmxH263Dec GstOmxH263Dec;
-typedef struct GstOmxH263DecClass GstOmxH263DecClass;
+typedef struct GstOmxBaseVideoDec GstOmxBaseVideoDec;
+typedef struct GstOmxBaseVideoDecClass GstOmxBaseVideoDecClass;
 
-#include "gstomx_base_videodec.h"
+#include "gstomx_base_filter.h"
 
-struct GstOmxH263Dec
+struct GstOmxBaseVideoDec
 {
-    GstOmxBaseVideoDec omx_base;
+	GstOmxBaseFilter omx_base;
+
+	OMX_VIDEO_CODINGTYPE compression_format;
 };
 
-struct GstOmxH263DecClass
+struct GstOmxBaseVideoDecClass
 {
-    GstOmxBaseVideoDecClass parent_class;
+	GstOmxBaseFilterClass parent_class;
 };
 
-GType gst_omx_h263dec_get_type (void);
+GType gst_omx_base_videodec_get_type (void);
 
 G_END_DECLS
 
-#endif /* __GST_OMX_H263DEC_H__ */
+#endif /* GSTOMX_BASE_VIDEODEC_H */
