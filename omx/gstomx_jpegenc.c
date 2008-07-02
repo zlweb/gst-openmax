@@ -35,7 +35,7 @@ enum
 
 #define DEFAULT_QUALITY 90
 
-#define OMX_COMPONENT_NAME "OMX.st.image_encoder.jpeg"
+#define OMX_COMPONENT_NAME "OMX.TI.JPEG.encoder"
 
 static GstOmxBaseFilterClass *parent_class = NULL;
 
@@ -429,6 +429,9 @@ type_instance_init (GTypeInstance *instance,
     omx_base->omx_setup = omx_setup;
 
     omx_base->gomx->settings_changed_cb = settings_changed_cb;
+
+    g_free (omx_base->omx_library);
+    omx_base->omx_library = g_strdup ("libOMX_Core.so");
 
     gst_pad_set_setcaps_function (omx_base->sinkpad, sink_setcaps);
 
