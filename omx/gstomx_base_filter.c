@@ -779,6 +779,8 @@ type_instance_init (GTypeInstance *instance,
     GST_LOG_OBJECT (self, "begin");
 
     self->use_timestamps = TRUE;
+    self->share_input_buffer = TRUE;
+    self->share_output_buffer = TRUE;
 
     /* GOmx */
     {
