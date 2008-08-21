@@ -59,6 +59,7 @@ struct GstOmxBaseFilter
 
     gboolean share_input_buffer;
     gboolean share_output_buffer; /** @todo this is hack, OpenMAX IL spec should be revised. */
+    gboolean enable_stream_mode; /** @todo remove; needed for some ti-specific tests. */
 };
 
 struct GstOmxBaseFilterClass
