@@ -689,8 +689,6 @@ pad_event (GstPad *pad,
 
             gst_pad_pause_task (self->srcpad);
 
-            g_omx_core_flush (gomx);
-
             ret = TRUE;
             break;
 
