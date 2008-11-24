@@ -337,8 +337,10 @@ omx_setup (GstOmxBaseFilter *omx_base)
         /* required for TI components. */
 #if 1
         /* the component should do this instead */
+
+        OMX_COLOR_FORMATTYPE color_format;
+
         {
-            OMX_COLOR_FORMATTYPE color_format;
 
             param->nPortIndex = 0;
             OMX_GetParameter (gomx->omx_handle, OMX_IndexParamPortDefinition, param);
@@ -388,6 +390,7 @@ omx_setup (GstOmxBaseFilter *omx_base)
 
             param->format.image.nFrameWidth = width;
             param->format.image.nFrameHeight = height;
+            param->format.image.eColorFormat = color_format;
 
             OMX_SetParameter (gomx->omx_handle, OMX_IndexParamPortDefinition, param);
         }
@@ -407,7 +410,14 @@ omx_setup (GstOmxBaseFilter *omx_base)
         param->nQFactor = self->quality;
         param->nPortIndex = 1;
 
-        OMX_SetConfig (gomx->omx_handle, OMX_IndexParamQFactor, param);
+        /* This is specific for TI. */
+        /** @todo use OMX_IndexParamQFactor instead */
+        {
+            OMX_INDEXTYPE index;
+            OMX_GetExtensionIndex (gomx->omx_handle, "OMX.TI.JPEG.encoder.Config.QFactor", &index);
+            param->nPortIndex = 0;
+            OMX_SetConfig (gomx->omx_handle, index, param);
+        }
 
         free (param);
     }
@@ -427,6 +437,7 @@ type_instance_init (GTypeInstance *instance,
 
     omx_base->omx_component = g_strdup (OMX_COMPONENT_NAME);
     omx_base->omx_setup = omx_setup;
+    omx_base->share_input_buffer = FALSE;
 
     omx_base->gomx->settings_changed_cb = settings_changed_cb;
 
