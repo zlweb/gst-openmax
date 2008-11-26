@@ -347,6 +347,8 @@ type_instance_init (GTypeInstance *instance,
     g_free (omx_base->omx_library);
     omx_base->omx_library = g_strdup ("libOMX_Core.so");
 
+    omx_base->share_output_buffer = FALSE;
+
     self->bitrate = DEFAULT_BITRATE;
 }
 
